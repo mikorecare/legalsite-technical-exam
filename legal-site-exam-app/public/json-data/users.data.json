@@ -1,0 +1,21 @@
+[
+    {
+      "id": "user-001",
+      "firstName": "Killua",
+      "lastName": "Zoldyc",
+      "speechCollectionIds": ["speech-101", "speech-102"]
+    },
+    {
+      "id": "user-002",
+      "firstName": "Gon",
+      "lastName": "Freecs",
+      "speechCollectionIds": ["speech-103", "speech-104", "speech-105"]
+    },
+    {
+      "id": "user-003",
+      "firstName": "Leorio",
+      "lastName": "Paladiknight",
+      "speechCollectionIds": ["speech-106"]
+    }
+  ]
+  

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="confirm-title">Share</h2>
+<mat-dialog-content class="confirm-message">
+  <div class="mb-3 email-input">
+    <label for="email" class="form-label">{{ data.message }}</label>
+    <input type="email" class="form-control mb-2" id="email" [(ngModel)]="email" #emailInput="ngModel" placeholder="Enter your email" required email>
+    @if(isValidEmail) {
+      <span class="text-danger">
+        Please enter a valid email address.
+      </span>
+    }
+  </div>  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-secondary me-2" mat-dialog-close>Cancel</button>
+  <button class="btn btn-primary" (click)="onConfirm()" [disabled]="isValidEmail">Send</button>
+</mat-dialog-actions>

@@ -13,26 +13,26 @@ export class UserModel {
         return this._lastName
     }
 
-    public get speechCollection(): SpeechModel[] {
-        return this._speechCollection;
+    public get speechCollectionIds(): string[] {
+        return this._speechCollectionIds;
     }
 
     private _id: string = "";
     private _firstName: string = "";
     private _lastName: string = "";
-    private _speechCollection: SpeechModel[] = [];
+    private _speechCollectionIds: string[] = [];
 
     constructor(user?: UserModel) {
         if(user) {
             this._id = user.id;
             this._firstName = user.firstName;
             this._lastName = user.lastName;
-            this._speechCollection = user.speechCollection
+            this._speechCollectionIds = user.speechCollectionIds
         }
     }
 
     public setSpeech(speech: SpeechModel) {
-        this._speechCollection.filter((speechFilter: SpeechModel)=>{
+        this._speechCollectionIds.filter((speechFilter: string)=>{
             
         });
     }

@@ -1,5 +1,20 @@
-<ul class="list-group list-group-horizontal d-flex w-100">
-    <li class="list-group-item flex-fill text-center">View my Speeches</li>
-    <li class="list-group-item flex-fill text-center">Submit a new Speech</li>
-    <li class="list-group-item flex-fill text-center">Search all Speeches</li>
+<ul class="list-group list-group-horizontal d-flex w-100 mt-3 mb-3 btn-group">
+    <li 
+        (click)="setPageType('VIEW')" 
+        class="list-group-item list-group-item-action flex-fill text-center"
+        [ngClass]="{'active': (pageType$ | async) === 'VIEW'}">
+        View my Speeches
+    </li>
+    <li 
+        (click)="setPageType('ADD')" 
+        class="list-group-item list-group-item-action flex-fill text-center"
+        [ngClass]="{'active': (pageType$ | async) === 'ADD'}">
+        Submit a new Speech
+    </li>
+    <li 
+        (click)="setPageType('ALL')" 
+        class="list-group-item list-group-item-action flex-fill text-center"
+        [ngClass]="{'active': (pageType$ | async) === 'ALL'}">
+        Search all Speeches
+    </li>
 </ul>
