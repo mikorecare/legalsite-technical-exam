@@ -11,13 +11,12 @@ body {
 
 textarea,
 input,
-.text-danger
-{
+.text-danger {
     font-size: 10px !important;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
     border-radius: 4px;
 }
 
@@ -27,7 +26,7 @@ input,
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: #cbe5ff;
     border-radius: 4px;
 }
 
@@ -41,36 +40,37 @@ input,
 
 .mat-mdc-snack-bar-action {
     font-size: 11px !important;
+    color: whitesmoke !important;
 }
 
 .mat-mdc-snack-bar-container {
-    --mdc-snackbar-supporting-text-size: 10px;
+    --mdc-snackbar-supporting-text-size: 12px;
+    --mdc-snackbar-container-shape: 8px;
 
     &.success-snackbar {
-        --mdc-snackbar-container-color: #4caf50;
+        --mdc-snackbar-container-color: #81c784;
         --mat-mdc-snack-bar-button-color: #fff;
-        --mdc-snackbar-supporting-text-color: #fff;
+        --mdc-snackbar-supporting-text-color: #313131;
     }
 
     &.error-snackbar {
-        --mdc-snackbar-container-color: #f44336;
+        --mdc-snackbar-container-color: #e57373;
         --mat-mdc-snack-bar-button-color: #fff;
-        --mdc-snackbar-supporting-text-color: #fff;
+        --mdc-snackbar-supporting-text-color: #313131;
     }
 
     &.warning-snackbar {
-        --mdc-snackbar-container-color: #ff9800;
-        --mat-mdc-snack-bar-button-color: #000;
-        --mdc-snackbar-supporting-text-color: #000;
+        --mdc-snackbar-container-color: #ffb74d;
+        --mat-mdc-snack-bar-button-color: #333;
+        --mdc-snackbar-supporting-text-color: #313131;
     }
 
     &.info-snackbar {
-        --mdc-snackbar-container-color: #03a9f4;
+        --mdc-snackbar-container-color: #64b5f6;
         --mat-mdc-snack-bar-button-color: #fff;
-        --mdc-snackbar-supporting-text-color: #fff;
+        --mdc-snackbar-supporting-text-color: #313131;
     }
 }
-
 
 html,
 body {

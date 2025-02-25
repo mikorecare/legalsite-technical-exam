@@ -1,47 +1,75 @@
-<div class="container-fluid">
-  <div class="row mb-2">
-    <div class="col-md-6">
-      <input 
-      class="form-control" 
-      type="text" 
-      placeholder="Title" 
-      [value]="editedTitle"
-      (input)="onTitleChange($event)"
-      #contentTitle/>
+<div class="container-fluid p-4 bg-white shadow-sm rounded custom-container">
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-8">
+            <label for="contentTitle" class="form-label fw-semibold"
+                >Title</label
+            >
+            <input
+                id="contentTitle"
+                class="form-control form-control-lg"
+                type="text"
+                placeholder="Enter speech title..."
+                [value]="editedTitle"
+                (input)="onTitleChange($event)"
+            />
+        </div>
+        <div class="col-md-4 text-sm-end text-muted align-self-start">
+                Last Modified:
+                <strong>{{ dateModified | date : "shortDate" }}</strong>
+        </div>
     </div>
-  </div>
-  
-  <div class="row mb-2">
-    <div class="col-md-12">
-      <textarea
-      rows="21"
-      class="form-control text-start"
-      placeholder="Content goes here..."
-      aria-label=""
-      [value]="editedContent"
-      (input)="onContentChange($event)"
-      #speechContent
-    ></textarea>
-    </div>
-  </div>
 
-  <div class="row">
-    <speech-list-filter-component></speech-list-filter-component>
-  </div>
-
-  <div class="row mt-2">
-    <div class="col-md-6 offset-md-6 d-flex justify-content-end">
-      @if((pageType$ | async ) === 'VIEW') {
-        <button (click)="onDelete()" type="button" class="btn btn-danger btn-sm me-2">Delete</button>
-      }
-      
-      @if((pageType$ | async ) === 'VIEW' || (pageType$ | async ) === 'ADD') {
-        <button (click)="onSave()" type="button" class="btn btn-success btn-sm me-2">Save</button>
-      }
-      
-      @if((pageType$ | async ) === 'VIEW' || (pageType$ | async ) === 'ALL') {
-        <button (click)="onShare()" type="button" class="btn btn-primary btn-sm">Share</button>
-      }
+    <div class="row mb-3">
+        <div class="col-12">
+            <label for="speechContent" class="form-label fw-semibold"
+                >Content</label
+            >
+            <textarea
+                id="speechContent"
+                rows="12"
+                class="form-control"
+                placeholder="Start writing your speech..."
+                [value]="editedContent"
+                (input)="onContentChange($event)"
+            ></textarea>
+        </div>
     </div>
-  </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <speech-list-filter-component></speech-list-filter-component>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12 d-flex justify-content-end gap-2">
+            @if ((pageType$ | async) === 'VIEW') {
+            <button
+                (click)="onDelete()"
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+            >
+                🗑 Delete
+            </button>
+            } @if ((pageType$ | async) === 'VIEW' || (pageType$ | async) ===
+            'ADD') {
+            <button
+                (click)="onSave()"
+                type="button"
+                class="btn btn-success btn-sm"
+            >
+                💾 Save
+            </button>
+            } @if ((pageType$ | async) === 'VIEW' || (pageType$ | async) ===
+            'ALL') {
+            <button
+                (click)="onShare()"
+                type="button"
+                class="btn btn-primary btn-sm"
+            >
+                📤 Share
+            </button>
+            }
+        </div>
+    </div>
 </div>

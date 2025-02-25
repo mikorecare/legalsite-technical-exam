@@ -1,10 +1,9 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Observable } from "rxjs";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
-import { GlobalService } from "../../services/global.service";
 import { PageType } from "../../enums/global.page.type.enum";
+import { GlobalService, SpeechFilterService } from "../../services";
 
 @Component({
     selector: "head-navigation-list-component",
@@ -20,13 +19,14 @@ export class HeadNavigationListComponent {
     public pageType$!: Observable<PageType>;
 
     constructor(
-        private globalService: GlobalService
+        private readonly globalService: GlobalService,
+        private readonly speechFilterService: SpeechFilterService 
     ) { 
         this.pageType$ = this.globalService.pageType$;
-        this.pageType$.pipe(takeUntilDestroyed());
     }
 
     public setPageType(page: keyof typeof PageType): void {
+        this.speechFilterService.clearFilters();
         this.globalService.setPageType(PageType[page]);
     }
 }

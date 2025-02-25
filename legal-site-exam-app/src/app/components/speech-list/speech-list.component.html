@@ -1,16 +1,20 @@
-<div class="list-group-container d-flex flex-column overflow-auto mb-2 border">
-    <ul class="list-group d-flex flex-column">
-        @for (speech of (speeches$ | async); track speech.id) {
-        <li
-            (click)="selectedSpeechId(speech.id)"
-            class="list-group-item list-group-item-action text-center"
-            [title]="speech.title"
-        >
-            <div>{{ speech.title }}</div>
-            <small class="text-muted">{{ speech.dateCreated }}</small>
-        </li>
-        } @empty {
-        <div class="alert alert-info" role="alert">No Speeches Found</div>
-        }
-    </ul>
+<div class="list-group-container d-flex flex-column overflow-auto mb-2 border rounded shadow-sm">
+  <ul class="list-group d-flex flex-column">
+    @for (speech of (speeches$ | async); track speech.id) {
+      <li
+        (click)="selectedSpeechId(speech.id)"
+        class="list-group-item list-group-item-action speech-item text-center"
+        [title]="speech.title"
+        [class.active]="speech.id === (selectedSpeech$ | async)"
+      >
+        <div class="fw-semibold">{{ speech.title }}</div>
+        <small class="text-muted">{{ speech.dateCreated | date: 'shortDate' }}</small>
+      </li>
+    } @empty {
+      <div class="d-flex flex-column align-items-center justify-content-center py-4 text-secondary text-wrap w-100">
+        <p class="mt-2 mb-0 text-center">📢 No speeches available</p>
+        <small class="text-muted text-center">Start by adding a new speech</small>
+      </div>
+    }
+  </ul>
 </div>

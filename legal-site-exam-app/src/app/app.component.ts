@@ -1,11 +1,13 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FullComponent } from "./pages/full-component";
+
+import { UserNavComponent } from "./components/navbar/navbar.component";
 
 @Component({
   selector: 'app-root',
   imports: [
-    FullComponent
+    UserNavComponent,
+    RouterOutlet
 ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

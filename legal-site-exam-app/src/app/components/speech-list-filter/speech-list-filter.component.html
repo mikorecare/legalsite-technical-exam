@@ -1,11 +1,11 @@
 <div class="col-md-12 d-flex justify-content-end">
-    @if((pageType$ | async ) === 'VIEW' || (pageType$ | async ) === 'ALL') {
+  @if ((pageType$ | async) === 'VIEW' || (pageType$ | async) === 'ALL') {
 
-      @if((pageType$ | async ) === 'ALL') {
-        <input (input)="onAuthorChange($event)" class="form-control me-2" type="text" placeholder="Author" />
+      @if ((pageType$ | async) === 'ALL') {
+          <input #authorInput (input)="onAuthorChange($event)" class="form-control me-2" type="text" placeholder="Author" />
       }
 
-      <input (input)="onSubjectKeywordChange($event)" class="form-control me-2" type="text" placeholder="Subject area keywords"/>
-      <input (input)="onDateChange($event)" class="form-control" type="date" >
-    }
+      <input #subjectInput (input)="onSubjectKeywordChange($event)" class="form-control me-2" type="text" placeholder="Subject area keywords"/>
+      <input #dateInput (input)="onDateChange($event)" class="form-control" type="date">
+  }
 </div>

@@ -16,6 +16,12 @@ export class SpeechFilterService {
 
   constructor(){}
 
+  public clearFilters(): void {
+    this.authorSubject.next("");
+    this.keywordsSubject.next("");
+    this.dateSubject.next("");
+  }
+
   public setAuthor(author: string): void {
     this.authorSubject.next(author);
   }

@@ -32,7 +32,7 @@ export class CachedDataService {
 
     public async createSpeech(contentTitle: string, speechContent: string): Promise<void> {
         const newId = await this.createSpeechId();
-        const authorId = await firstValueFrom(this.globalService.selectedUser$);
+        const authorId = await firstValueFrom(this.globalService.selectedUserId$);
 
         const newSpeech = new SpeechModel(
             newId,
@@ -70,6 +70,6 @@ export class CachedDataService {
 
         const updatedSpeeches = currentSpeeches.filter(speech => speech.id !== selectedSpeechId);
 
-        this.globalService.updateSpeeches(updatedSpeeches);
+        this.globalService.updateSpeeches(updatedSpeeches, false);
     }
 }

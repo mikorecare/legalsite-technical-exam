@@ -37,6 +37,7 @@ export class FormTextEditorComponent {
     public editedContent: string = "";
     public editedTitle: string = "";
     public originalTitle: string = "";
+    public dateModified: Date | string = "";
 
     private selectedSpeechId: string = "";
 
@@ -61,6 +62,7 @@ export class FormTextEditorComponent {
                 this.editedContent = speech?.speechContent || "";
                 this.editedTitle = speech?.title || "";
                 this.originalTitle = speech?.title || "";
+                this.dateModified = speech?.dateModified || "";
             });
     }
 
@@ -79,7 +81,10 @@ export class FormTextEditorComponent {
 
         const dialogRef = this.dialog.open(ConfirmModalComponent, {
             width: '350px',
-            data: { message: message },
+            data: { 
+                title: "Delete Speech",
+                message: message 
+            },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -93,19 +98,24 @@ export class FormTextEditorComponent {
         if (!this.editedContent || !this.editedTitle) {
             this.dialog.open(InformationModalComponent, {
                 width: '350px',
-                data: { message: 'Please fill-out the title and speech content' },
+                data: { 
+                    message: 'Please fill-out the title and speech content' 
+                },
             });
 
             return;
         }
 
         const message: string = this.selectedSpeechId
-            ? "Are you sure you want to save this speech?"
-            : "Overwrite existing speech?"
-
+            ? "Overwrite existing speech?"
+            : "Are you sure you want to save this speech?"
+            
         const dialogRef = this.dialog.open(ConfirmModalComponent, {
             width: '350px',
-            data: { message: message },
+            data: { 
+                title: "Save Speech",
+                message: message 
+            },
         });
 
         dialogRef.afterClosed().subscribe((result) => {

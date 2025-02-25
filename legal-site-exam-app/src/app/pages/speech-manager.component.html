@@ -4,10 +4,13 @@
    </div>
  
    <div class="row">
-     <div class="col-md-3">
-       <speech-list-component></speech-list-component>
-     </div>
-     <div class="col-md-9">
+     @if((pageType$ | async) !== "ADD" ) {
+      <div class="col-md-3">
+        <speech-list-component></speech-list-component>
+      </div>
+     }
+    
+     <div [class]="(pageType$ | async) === 'ADD' ? 'col-md-12' : 'col-md-9'">
        <form-text-editor-component></form-text-editor-component>
      </div>
    </div>

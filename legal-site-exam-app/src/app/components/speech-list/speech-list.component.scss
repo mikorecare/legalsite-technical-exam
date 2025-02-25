@@ -1,16 +1,37 @@
 .list-group {
+    overflow-y: scroll;
     min-height: 80vh !important;
     max-height: 80vh !important;
 
     .list-group-item {
         min-height: 2rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        max-height: 4rem;
         cursor: pointer;
+
+        .fw-semibold {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     .alert {
         font-size: 10px;
     }
+}
+
+.speech-item {
+    padding: auto;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.speech-item:hover {
+    background-color: #e3f2fd;
+}
+
+.speech-item.active {
+    background-color: #cce5ff !important;
+    color: #004085 !important;
+    font-weight: bold;
+    border-left: 4px solid #007bff;
 }

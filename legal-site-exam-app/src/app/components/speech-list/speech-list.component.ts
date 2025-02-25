@@ -18,12 +18,13 @@ import { SpeechModel } from "../../models/speech.model";
 export class SpeechListComponent {
 
     public speeches$: Observable<SpeechModel[]>;
+    public selectedSpeech$: Observable<string>;
 
     constructor(
         private global: GlobalService
     ) {
         this.speeches$ = this.global.filteredSpeeches$;
-        this.speeches$.pipe(takeUntilDestroyed());
+        this.selectedSpeech$ = this.global.selectedSpeech$;
     }
 
     public selectedSpeechId(selectedSpeechId: string): void {

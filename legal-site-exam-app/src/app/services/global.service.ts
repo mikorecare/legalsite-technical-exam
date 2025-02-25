@@ -21,7 +21,7 @@ export class GlobalService {
     public users$ = this.usersSubject.asObservable();
     public speeches$ = this.speechesSubject.asObservable();
     public selectedSpeech$ = this.selectedSpeechSubject.asObservable();
-    public selectedUser$ = this.selectedUserIdSubject.asObservable();
+    public selectedUserId$ = this.selectedUserIdSubject.asObservable();
     public pageType$ = this.pageTypeSubject.asObservable();
 
     public filteredSpeeches$;
@@ -56,12 +56,23 @@ export class GlobalService {
     }
 
     public createSpeech(newSpeech: SpeechModel): void {
-        const updatedSpeeches = [...this.speechesSubject.value, newSpeech];
-        this.speechesSubject.next(updatedSpeeches);
+        try{
+            const updatedSpeeches = [...this.speechesSubject.value, newSpeech];
+            this.speechesSubject.next(updatedSpeeches);
+            this.snackBar.success("Speech Saved");
+        } catch {
+            this.snackBar.error("Something went wrong");
+        }
+        
     }
 
-    public async updateSpeeches(updatedSpeeches: SpeechModel[]): Promise<void> {
-        this.speechesSubject.next(updatedSpeeches);
+    public async updateSpeeches(updatedSpeeches: SpeechModel[], isSaving: boolean = true): Promise<void> {
+        try {
+            this.speechesSubject.next(updatedSpeeches);
+            isSaving ? this.snackBar.success("Speech Saved") : this.snackBar.warning("Speech Deleted");
+        } catch {
+            this.snackBar.error("Something went wrong");
+        }
     }
 
     public setSelectedUserId(userId: string): void {
@@ -87,6 +98,7 @@ export class GlobalService {
     }
 
     private setPageSpeeches(speeches: SpeechModel[], selectedUserId: string, pageType: PageType): SpeechModel[] {
+
         switch (pageType) {
             case PageType.VIEW:
                 return speeches.filter(speech => speech.authorId === selectedUserId);
@@ -102,7 +114,7 @@ export class GlobalService {
     private setFilteredSpeeches(): Observable<SpeechModel[]> {
         return combineLatest([
             this.speeches$,
-            this.selectedUser$,
+            this.selectedUserId$,
             this.pageType$,
             this.speechFilterService.author$,
             this.speechFilterService.keywords$,
@@ -134,7 +146,13 @@ export class GlobalService {
                 if (date) {
                     filteredSpeeches = filteredSpeeches.filter(s => s.dateCreated.includes(date));
                 }
-        
+
+                const checkId = filteredSpeeches.find(speech => this.selectedSpeechSubject.getValue());
+                
+                if (!checkId) {
+                    this.setSelectedSpeechId("");
+                }
+
                 return filteredSpeeches;
             }),
             shareReplay(1)
