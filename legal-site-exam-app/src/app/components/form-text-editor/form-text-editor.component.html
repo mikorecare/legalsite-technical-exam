@@ -26,17 +26,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-6 offset-md-6 d-flex justify-content-end">
-      @if((pageType$ | async ) === 'VIEW' || (pageType$ | async ) === 'ALL') {
-
-        @if((pageType$ | async ) === 'ALL') {
-          <input class="form-control me-2" type="text" placeholder="Author" />
-        }
-  
-        <input class="form-control me-2" type="text" placeholder="Subject area keywords"/>
-        <input class="form-control" type="date" >
-      }
-    </div>
+    <speech-list-filter-component></speech-list-filter-component>
   </div>
 
   <div class="row mt-2">

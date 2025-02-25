@@ -6,7 +6,7 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 export class SnackbarService {
 
-    private readonly autoDismissInMs: number = 5000;
+    private readonly autoDismissInMs: number = 2000;
 
     constructor(
         private readonly matSnackbar: MatSnackBar,

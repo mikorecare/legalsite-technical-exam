@@ -3,24 +3,29 @@ import { combineLatest, map, Observable } from "rxjs";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
-import { PageType } from "../../enums/global.page.type.enum";
-import { CachedDataService } from "../../services/cached.data.service";
-import { SpeechModel } from "../../models/speech.model";
-import { GlobalService } from "../../services/global.service";
 import { MatDialog } from "@angular/material/dialog";
+
 import { ConfirmModalComponent } from "../../common/modal/confirm/confirm.modal.component";
 import { InformationModalComponent } from "../../common/modal/information/information.modal.component";
 import { ShareSpeechModalComponent } from "../../common/modal/share-speech/share-speech.modal.component";
+import { PageType } from "../../enums/global.page.type.enum";
+import { SpeechModel } from "../../models/speech.model";
+import { 
+    GlobalService, 
+    CachedDataService, 
+    SnackbarService, 
+} from "../../services";
+import { SpeechListFilterComponent } from "../speech-list-filter/speech-list-filter.component";
 
 @Component({
     selector: "form-text-editor-component",
     templateUrl: "./form-text-editor.component.html",
     styleUrl: "./form-text-editor.component.scss",
     imports: [
-        CommonModule,
-        FormsModule
-    ],
+    CommonModule,
+    FormsModule,
+    SpeechListFilterComponent
+],
     standalone: true
 })
 export class FormTextEditorComponent {
@@ -36,14 +41,15 @@ export class FormTextEditorComponent {
     private selectedSpeechId: string = "";
 
     constructor(
-        private global: GlobalService,
-        private cachedData: CachedDataService,
-        private dialog: MatDialog,
+        private readonly globalService: GlobalService,
+        private readonly cachedData: CachedDataService,
+        private readonly dialog: MatDialog,
+        private readonly snackBarService: SnackbarService,
     ) {
-        this.speeches$ = this.global.speeches$;
-        this.pageType$ = this.global.pageType$;
+        this.speeches$ = this.globalService.speeches$;
+        this.pageType$ = this.globalService.pageType$;
 
-        this.speech$ = combineLatest([this.speeches$, this.global.selectedSpeech$]).pipe(
+        this.speech$ = combineLatest([this.speeches$, this.globalService.selectedSpeech$]).pipe(
             map(([speeches, selectedSpeechId]) =>
                 speeches.find(speech => speech.id === selectedSpeechId)
             ));
@@ -56,8 +62,6 @@ export class FormTextEditorComponent {
                 this.editedTitle = speech?.title || "";
                 this.originalTitle = speech?.title || "";
             });
-
-        this.pageType$.pipe(takeUntilDestroyed());
     }
 
     public onContentChange(event: Event): void {
@@ -120,6 +124,12 @@ export class FormTextEditorComponent {
         const dialogRef = this.dialog.open(ShareSpeechModalComponent, {
             width: '350px',
             data: { message: "Enter your colleague's email" },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            if (result) {
+                this.snackBarService.info("Email sent successfully");
+            }
         });
     }
 }

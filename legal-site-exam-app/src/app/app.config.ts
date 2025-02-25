@@ -1,12 +1,16 @@
 import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { GlobalService } from './services/global.service';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { CachedDataService } from './services/cached.data.service';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MaterialModule } from './material.module';
-import { SnackbarService } from './services/snackbar.service';
-import { backendErrorInterceptorService } from './services/backendInterceptor.service';
+
+import { 
+  backendErrorInterceptorService, 
+  GlobalService, 
+  CachedDataService, 
+  SnackbarService, 
+  SpeechFilterService 
+} from './services';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +23,7 @@ export const appConfig: ApplicationConfig = {
     GlobalService,
     CachedDataService,
     SnackbarService,
+    SpeechFilterService,
     provideAnimationsAsync()
   ]
 };

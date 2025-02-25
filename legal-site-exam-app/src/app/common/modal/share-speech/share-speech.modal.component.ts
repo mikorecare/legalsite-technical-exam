@@ -24,7 +24,7 @@ export class ShareSpeechModalComponent {
   constructor(
     public dialogRef: MatDialogRef<ShareSpeechModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { message: string }
-  ) {}
+  ) { }
 
   public onConfirm(): void {
     this.dialogRef.close(true);

@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { GlobalService } from "../../services/global.service";
-import { SpeechModel } from "../../models/speech.model";
 import { Observable } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
+import { GlobalService } from "../../services/global.service";
+import { SpeechModel } from "../../models/speech.model";
 
 @Component({
     selector: "speech-list-component",
@@ -23,7 +23,6 @@ export class SpeechListComponent {
         private global: GlobalService
     ) {
         this.speeches$ = this.global.filteredSpeeches$;
-
         this.speeches$.pipe(takeUntilDestroyed());
     }
 

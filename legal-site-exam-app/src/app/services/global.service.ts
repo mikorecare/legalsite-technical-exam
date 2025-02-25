@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, combineLatest, firstValueFrom } from "rxjs";
+import { BehaviorSubject, combineLatest, Observable } from "rxjs";
 import { map, shareReplay, tap, take } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
-import { SpeechModel } from "../models/speech.model";
-import { UserModel } from "../models/user.model";
+
 import { PageType } from "../enums/global.page.type.enum";
 import { SnackbarService } from "./snackbar.service";
+import { SpeechFilterService } from "./speech.filter.service";
+import { UserModel, SpeechModel } from "../models";
 
 @Injectable({
     providedIn: "root"
@@ -23,24 +24,20 @@ export class GlobalService {
     public selectedUser$ = this.selectedUserIdSubject.asObservable();
     public pageType$ = this.pageTypeSubject.asObservable();
 
-    public filteredSpeeches$ = combineLatest([
-        this.speeches$,
-        this.selectedUser$,
-        this.pageType$
-    ]).pipe(
-        map(([speeches, selectedUserId, pageType]) => this.setPageSpeeches(speeches, selectedUserId, pageType)),
-        shareReplay(1)
-    );
+    public filteredSpeeches$;
 
     constructor(
         private readonly httpClient: HttpClient,
-        private readonly snackBar: SnackbarService
-    ) { }
+        private readonly snackBar: SnackbarService,
+        private readonly speechFilterService: SpeechFilterService
+    ) { 
+        this.filteredSpeeches$ = this.setFilteredSpeeches();
+    }
 
     public loadData(): void {
         if (this.usersSubject.value.length === 0) {
             this.httpClient.get<UserModel[]>("/json-data/users.data.json")
-                .pipe(tap(users => this.usersSubject.next(users)))
+                .pipe(tap((users: UserModel[]) => this.usersSubject.next(users)))
                 .subscribe();
             
             this.snackBar.success("Data Loaded Successfully");
@@ -49,7 +46,7 @@ export class GlobalService {
         if (this.speechesSubject.value.length === 0) {
             this.httpClient.get<SpeechModel[]>("/json-data/speech.data.json")
                 .pipe(
-                    tap(speeches => {
+                    tap((speeches: SpeechModel[]) => {
                         this.speechesSubject.next(speeches);
                         this.setPageType(PageType.VIEW);
                     })
@@ -100,5 +97,47 @@ export class GlobalService {
             default:
                 return [];
         }
+    }
+
+    private setFilteredSpeeches(): Observable<SpeechModel[]> {
+        return combineLatest([
+            this.speeches$,
+            this.selectedUser$,
+            this.pageType$,
+            this.speechFilterService.author$,
+            this.speechFilterService.keywords$,
+            this.speechFilterService.date$,
+            this.users$
+        ]).pipe(
+            map(([speeches, selectedUserId, pageType, author, keywords, date, users]) => {
+                let filteredSpeeches = this.setPageSpeeches(speeches, selectedUserId, pageType);
+
+                const speechesWithAuthor = filteredSpeeches.map(speech => ({
+                    ...speech,
+                    authorName: users
+                        .filter(user => user.id === speech.authorId)
+                        .map(user => `${user.firstName} ${user.lastName}`)
+                        .join('') || 'Unknown User'
+                }));
+
+                if (author) {
+                    filteredSpeeches = speechesWithAuthor.filter(s => 
+                        s.authorName.toLowerCase().includes(author.toLowerCase())
+                    );
+                }
+                if (keywords) {
+                    filteredSpeeches = filteredSpeeches.filter(s => 
+                        s.title.toLowerCase().includes(keywords.toLowerCase()) ||
+                        s.speechContent.toLowerCase().includes(keywords.toLowerCase())
+                    );
+                }
+                if (date) {
+                    filteredSpeeches = filteredSpeeches.filter(s => s.dateCreated.includes(date));
+                }
+        
+                return filteredSpeeches;
+            }),
+            shareReplay(1)
+        );
     }
 }

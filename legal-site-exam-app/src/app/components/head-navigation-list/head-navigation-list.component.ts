@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { GlobalService } from "../../services/global.service";
-import { PageType } from "../../enums/global.page.type.enum";
 import { CommonModule } from "@angular/common";
 import { Observable } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+
+import { GlobalService } from "../../services/global.service";
+import { PageType } from "../../enums/global.page.type.enum";
 
 @Component({
     selector: "head-navigation-list-component",
@@ -22,7 +23,6 @@ export class HeadNavigationListComponent {
         private globalService: GlobalService
     ) { 
         this.pageType$ = this.globalService.pageType$;
-
         this.pageType$.pipe(takeUntilDestroyed());
     }
 
