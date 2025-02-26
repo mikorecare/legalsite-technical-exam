@@ -9,13 +9,13 @@ import { ConfirmModalComponent } from "../../common/modal/confirm/confirm.modal.
 import { InformationModalComponent } from "../../common/modal/information/information.modal.component";
 import { ShareSpeechModalComponent } from "../../common/modal/share-speech/share-speech.modal.component";
 import { PageType } from "../../enums/global.page.type.enum";
-import { SpeechModel } from "../../models/speech.model";
 import { 
     GlobalService, 
     CachedDataService, 
     SnackbarService, 
 } from "../../services";
 import { SpeechListFilterComponent } from "../speech-list-filter/speech-list-filter.component";
+import { SpeechModel, UserModel } from "../../models";
 
 @Component({
     selector: "form-text-editor-component",
@@ -33,6 +33,7 @@ export class FormTextEditorComponent {
     public speeches$: Observable<SpeechModel[]>;
     public speech$: Observable<SpeechModel | undefined>;
     public pageType$!: Observable<PageType>;
+    public author$!: Observable<UserModel | undefined>;
 
     public editedContent: string = "";
     public editedTitle: string = "";
@@ -64,6 +65,13 @@ export class FormTextEditorComponent {
                 this.originalTitle = speech?.title || "";
                 this.dateModified = speech?.dateModified || "";
             });
+        
+        this.author$ = combineLatest([
+            this.globalService.users$,
+            this.speech$
+        ]).pipe(
+            map(([users, speech]) => users.find(user => user.id === speech?.authorId))
+        );
     }
 
     public onContentChange(event: Event): void {

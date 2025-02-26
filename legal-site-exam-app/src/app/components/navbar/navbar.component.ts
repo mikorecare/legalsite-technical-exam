@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { combineLatest, filter, map, Observable } from 'rxjs';
 import { UserModel } from '../../models';
-import { GlobalService } from '../../services';
+import { GlobalService, SpeechFilterService } from '../../services';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PageType } from '../../enums';
 
 @Component({
     selector: 'navbar-component',
@@ -18,13 +19,14 @@ export class UserNavComponent implements OnInit {
     public users$!: Observable<UserModel[]>;
     public selectedUser$!: Observable<UserModel | undefined>;
 
-    constructor(private globalService: GlobalService) {
-        
-    }
+    constructor(
+        private readonly globalService: GlobalService,
+        private readonly speechFilterService: SpeechFilterService
+    ) {}
 
     public ngOnInit(): void {
         this.users$ = this.globalService.users$;
-    
+
         this.selectedUser$ = combineLatest([
             this.globalService.users$,
             this.globalService.selectedUserId$
@@ -35,5 +37,7 @@ export class UserNavComponent implements OnInit {
 
     public selectUser(user: string): void {
         this.globalService.setSelectedUserId(user);
+        this.speechFilterService.clearFilters();
+        this.globalService.setPageType(PageType.VIEW);
     }
 }

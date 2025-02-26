@@ -1,21 +1,24 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-light bg-light px-3 shadow-sm">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Speech Manager</a>
-      <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ (selectedUser$ | async)?.firstName }} {{(selectedUser$ | async)?.lastName}}
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-               @for(user of (users$ | async); track user.id) {
-                <li>
-                    <a class="dropdown-item" (click)="selectUser(user.id)">{{ user.firstName }} {{user.lastName}}</a>
-                </li>
-               }
-            </ul>
-          </li>
-        </ul>
+      <a class="navbar-brand fw-semibold" href="#">Speech Manager</a>
+  
+      <div class="d-flex align-items-center">
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Hi {{ (selectedUser$ | async)?.firstName }} {{ (selectedUser$ | async)?.lastName }}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            @for(user of (users$ | async); track user.id) {
+            <li>
+              <a class="dropdown-item" (click)="selectUser(user.id)">{{ user.firstName }} {{user.lastName}}</a>
+            </li>
+            }
+          </ul>
+        </div>
+  
+        <button class="btn" type="button">
+          <i class="bi bi-list"></i>
+        </button>
       </div>
     </div>
   </nav>

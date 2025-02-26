@@ -29,7 +29,7 @@ mat-dialog-actions {
 
 .btn-confirm {
     color: white;
-    background: #007bff;  /* Bootstrap primary blue */
+    background: var(--bs-primary);
     border-radius: 6px;
     padding: 8px 16px;
     border: none;

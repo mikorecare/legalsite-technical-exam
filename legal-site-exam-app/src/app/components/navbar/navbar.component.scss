@@ -1,9 +1,32 @@
-.nav-link, .navbar-brand {
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.fw-semibold {
     font-size: 12px;
-    font-weight: 600;
+}
+
+.dropdown-toggle {
+    background: none !important;
+    border: none !important;
+    padding: 6px 12px !important;
+    font-weight: 500;
+    font-size: 12px;
+    width: max-content;
+}
+
+.dropdown-toggle:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .dropdown-item {
     font-size: 10px;
-    cursor: pointer;
 }

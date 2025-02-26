@@ -148,9 +148,13 @@ export class GlobalService {
                 }
 
                 const checkId = filteredSpeeches.find(speech => this.selectedSpeechSubject.getValue());
-                
+          
                 if (!checkId) {
-                    this.setSelectedSpeechId("");
+                    this.setSelectedSpeechId(filteredSpeeches[0]?.id);
+                }
+
+                if (checkId && filteredSpeeches.includes(checkId)) {
+                    this.setSelectedSpeechId(checkId.id);
                 }
 
                 return filteredSpeeches;

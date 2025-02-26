@@ -2,10 +2,10 @@
   @if ((pageType$ | async) === 'VIEW' || (pageType$ | async) === 'ALL') {
 
       @if ((pageType$ | async) === 'ALL') {
-          <input #authorInput (input)="onAuthorChange($event)" class="form-control me-2" type="text" placeholder="Author" />
+          <input #authorInput (input)="onAuthorChange($event)" class="form-control me-2 shadow-sm rounded" type="text" placeholder="Author" />
       }
 
-      <input #subjectInput (input)="onSubjectKeywordChange($event)" class="form-control me-2" type="text" placeholder="Subject area keywords"/>
+      <input #subjectInput (input)="onSubjectKeywordChange($event)" class="form-control me-2 shadow-sm rounded" type="text" placeholder="Subject area keywords"/>
       <input #dateInput (input)="onDateChange($event)" class="form-control" type="date">
   }
 </div>
